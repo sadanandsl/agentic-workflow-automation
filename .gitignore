@@ -1,0 +1,15 @@
+# Python/FastAPI Backend
+venv/
+__pycache__/
+*.pyc
+.env
+
+# React Frontend
+node_modules/
+build/
+.env.local
+
+# IDE & OS specific
+.idea/
+.vscode/
+.DS_Store

@@ -1,0 +1,395 @@
+/* src/index.css */
+
+/* Basic Reset & Global Styles */
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f8f9fa; /* Light background */
+  line-height: 1.6; /* Global line height for better readability */
+  color: #333; /* Default text color */
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* App Container for Sidebar Layout */
+.app-container {
+  display: flex; /* Use flexbox for side-by-side layout on larger screens */
+  min-height: 100vh; /* Ensure it takes full viewport height */
+  flex-direction: row; /* Default desktop layout (sidebar and main content side-by-side) */
+  overflow-x: hidden; /* Prevent horizontal scroll when sidebar collapses */
+}
+
+/* Sidebar Styling */
+.sidebar {
+  width: 250px; /* Fixed width for the sidebar on larger screens */
+  flex-shrink: 0; /* Prevent sidebar from shrinking */
+  background-color: #343a40; /* Dark background for sidebar */
+  color: white;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1); /* Subtle shadow */
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease-in-out; /* Smooth transition for sidebar hide/show */
+  z-index: 1020; /* Ensure sidebar is above content when off-canvas */
+  position: relative; /* Needed for absolute positioning of toggle */
+}
+
+.sidebar h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #007bff; /* Accent color for title */
+  font-size: 1.5rem; /* Consistent with Navbar title size */
+}
+
+.sidebar nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar nav ul li {
+  margin-bottom: 15px;
+}
+
+.sidebar nav ul li a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 15px;
+  display: block;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  font-size: 1.1rem; /* Consistent font size */
+}
+
+.sidebar nav ul li a:hover,
+.sidebar nav ul li a.active { /* Add .active class for active link styling */
+  background-color: #007bff; /* Highlight on hover/active */
+  color: white;
+}
+
+/* Main Content Styling */
+.main-content {
+  flex-grow: 1; /* Allows main content to take remaining space */
+  display: flex;
+  flex-direction: column; /* Stack navbar, page-content, and footer vertically */
+  min-height: 100vh; /* Ensure it takes full viewport height for proper footer positioning */
+  transition: margin-left 0.3s ease-in-out; /* For push effect */
+  /* Add padding-top to avoid content being hidden under sticky navbar */
+  padding-top: 70px; /* Adjust this value if your navbar height changes */
+}
+
+/* Navbar Styling (Enhanced) */
+.app-navbar { /* Custom class for our Navbar (renamed from .navbar to avoid Bootstrap conflicts) */
+  background-color: #ffffff; /* Clean white background */
+  padding: 15px 30px; /* More padding */
+  border-bottom: 1px solid #e0e0e0; /* Subtle bottom border */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* More pronounced shadow */
+  font-family: 'Inter', sans-serif;
+  position: sticky; /* Make it sticky at the top */
+  top: 0;
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.app-navbar .navbar-toggler {
+  border: none;
+  background: transparent;
+  color: #343a40;
+  font-size: 1.8rem; /* Larger hamburger icon */
+  padding: 0; /* Remove default button padding */
+}
+
+.app-navbar .navbar-brand-container {
+  display: flex;
+  align-items: center;
+}
+
+.app-navbar .navbar-brand-link {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.app-navbar .navbar-brand-icon {
+  font-size: 2.2rem; /* Larger icon */
+  margin-right: 10px;
+  color: #007bff; /* Match primary color */
+}
+
+.app-navbar .navbar-brand-text {
+  font-size: 1.6rem; /* Larger, more professional title */
+  font-weight: 700;
+  color: #343a40; /* Darker text */
+  transition: color 0.3s ease;
+}
+
+.app-navbar .navbar-brand-link:hover .navbar-brand-text {
+  color: #0056b3; /* Darker blue on hover */
+}
+
+.app-navbar .navbar-right-content {
+  display: flex;
+  align-items: center;
+}
+
+.app-navbar .navbar-user-email {
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.app-navbar .btn {
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.app-navbar .btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+
+/* Overlay for when sidebar is open on small screens */
+.overlay {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5); /* Semi-transparent black */
+  z-index: 1010; /* Below sidebar, above page content */
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0;
+}
+.overlay.show {
+  display: block;
+  opacity: 1;
+}
+
+/* Page Content Area */
+.page-content {
+  padding: 20px;
+  flex-grow: 1; /* Allows content area to fill remaining vertical space */
+  overflow-y: auto; /* Enable scrolling for content if it overflows */
+}
+
+/* Card Styling for Dashboard (example) */
+.card {
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #555;
+}
+
+.card-text.display-4 {
+  font-size: 2.5rem; /* Larger font for stats */
+  font-weight: 600;
+}
+
+.progress-bar {
+  border-radius: 5px;
+}
+
+/* --- Footer specific styles --- */
+.footer {
+  width: 100%;
+  flex-shrink: 0;
+  background-color: #343a40; /* Dark background */
+  color: white;
+  padding: 15px 20px;
+  border-top: 1px solid #495057;
+  text-align: center;
+}
+
+.footer-nav .list-inline-item .text-muted {
+  color: #adb5bd !important; /* Lighter text for footer links */
+}
+
+.footer-nav .list-inline-item .text-muted:hover {
+  color: #fff !important; /* White on hover */
+}
+
+
+/* --- Landing Page specific styles (combined and refined) --- */
+.landing-page {
+  /* Already covered by global body font-family, but kept for clarity */
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Hero Section */
+.hero-section {
+  background-color: #f0f8ff;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 0;
+  border-radius: 10px;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+  border-radius: 10px;
+}
+
+.hero-section .container {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-section h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-section p.lead {
+  font-size: 1.25rem;
+  font-weight: 300;
+  margin-bottom: 2.5rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Feature Cards */
+.feature-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 0.75rem !important;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.feature-card .card-img-top {
+  object-fit: cover;
+  height: 180px;
+  border-radius: 0.75rem 0.75rem 0 0 !important;
+}
+
+.feature-card .card-title {
+  color: #007bff;
+  font-size: 1.3rem;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+/* Call to Action Cards (bottom section) */
+.card.border-primary {
+  border: 2px solid #007bff !important;
+}
+
+.card.border-success {
+  border: 2px solid #28a745 !important;
+}
+
+.card.rounded-4 {
+    border-radius: 1rem !important;
+}
+
+
+/* --- Responsive Adjustments (Unified) --- */
+
+/* For screens smaller than 768px (Bootstrap's 'md' breakpoint) */
+@media (max-width: 767.98px) {
+  .sidebar {
+    position: fixed; /* Fixed position, off-screen by default */
+    top: 0;
+    left: 0;
+    height: 100vh; /* Full height */
+    transform: translateX(-250px); /* Hide by default */
+  }
+
+  .sidebar.show {
+    transform: translateX(0); /* Show when 'show' class is present */
+  }
+
+  .main-content {
+    margin-left: 0; /* No margin on small screens */
+    padding-top: 60px; /* Adjust padding for smaller Navbar on mobile */
+  }
+
+  .app-navbar { /* Target the custom class for Navbar */
+    padding: 15px 20px;
+    justify-content: space-between;
+  }
+  .app-navbar .navbar-toggler {
+    display: block; /* Show hamburger on small screens */
+  }
+  .app-navbar .navbar-brand-text {
+    font-size: 1.3rem;
+  }
+  .app-navbar .navbar-brand-icon {
+    font-size: 1.8rem;
+  }
+
+  .overlay {
+    display: block; /* Show overlay on small screens when needed */
+    opacity: 0; /* Hidden initially */
+  }
+  .overlay.show {
+    opacity: 1; /* Fade in when sidebar is open */
+  }
+
+  /* Specific component adjustments for small screens */
+  .card-text.display-4 {
+    font-size: 1.8rem;
+  }
+
+  .hero-section {
+    min-height: 400px;
+    padding: 60px 0;
+  }
+  .hero-section h1 {
+    font-size: 2.5rem;
+  }
+  .hero-section p.lead {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .hero-section .btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+
+  .footer {
+    flex-direction: column;
+    align-items: center;
+  }
+  .footer-nav {
+    margin-top: 10px;
+  }
+}
+
+/* For screens smaller than 992px (Bootstrap's 'lg' breakpoint) - might be useful for tablets */
+@media (max-width: 991.98px) {
+  .sidebar h2 {
+    font-size: 1.8rem;
+  }
+}
