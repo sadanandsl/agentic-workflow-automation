@@ -16,7 +16,7 @@ This project is a full-stack solution for managing Paying Guest (PG) accommodati
 
 ```
 backend/
-  ├── main.py                # FastAPI application entry point
+  ├── main.py                # FastAPI application entry poin
   ├── config.py              # Configuration (env variables)
   ├── database.py            # Database setup (SQLAlchemy, async)
   ├── models/                # ORM models (tenants, maintenance)
@@ -87,7 +87,3 @@ mypg-frontend/
 ## License
 
 This project is for educational/demo purposes.
-
----
-
-For more details, see
